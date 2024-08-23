@@ -2,6 +2,7 @@ import { traversals } from "./board-utils.js";
 
 type CellValues = 0 | 1 | 2;
 type Coordinates = { x: number; y: number };
+export type BoardMatrix = CellValues[][];
 
 export default class Board {
   #board;
@@ -14,7 +15,7 @@ export default class Board {
     this.#numRows = numRows;
   }
 
-  #createBoard(numCols: number, numRows: number): CellValues[][] {
+  #createBoard(numCols: number, numRows: number): BoardMatrix {
     return new Array(numCols)
       .fill(undefined)
       .map((_x) => new Array(numRows).fill(0));
@@ -22,6 +23,7 @@ export default class Board {
 
   dropToken(col: number, playerNum: CellValues) {
     const currentCol = this.#board[col];
+    let maxConnection = 1;
 
     if (currentCol[0] !== 0) throw new Error("Invalid move, col is full");
 
@@ -31,14 +33,17 @@ export default class Board {
         console.log(
           `adding token ${playerNum} to col ${col}, it falls to row ${i - 1}`,
         );
-        const maxConnection = this.#findMaxConnection({
+        maxConnection = this.#findMaxConnection({
           x: col,
           y: i - 1,
         });
         console.log(`max connection found: ${maxConnection}`);
-        console.log(this.#board);
+        break;
       }
     }
+
+    // return { board: this.#board, maxConnection };
+    return this.#board;
   }
 
   #traverseUntilStopped(startPos: Coordinates, direction: Coordinates) {

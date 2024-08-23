@@ -1,4 +1,7 @@
 import Board from "./Board.js";
+import Gui from "./Gui.js";
+// @ts-ignore
+import { setTimeout } from "timers/promises";
 
 type GameOptions = {
   width?: number;
@@ -7,11 +10,13 @@ type GameOptions = {
 };
 
 export default class Game {
-  #numCols: number;
-  #numRows: number;
+  #numCols;
+  #numRows;
   #board: Board | undefined;
+  #gui;
 
   constructor(options: GameOptions) {
+    this.#gui = new Gui();
     this.#numCols = options.width || 7;
     this.#numRows = options.height || 6;
   }
@@ -26,15 +31,16 @@ export default class Game {
     this.#board = new Board(this.#numCols, this.#numRows);
   }
 
-  #mockGameplay() {
+  async #mockGameplay() {
     // do some test moves on the board
     if (!this.#board) throw new Error("Cannot find instance of board");
 
-    this.#board.dropToken(0, 1);
-    this.#board.dropToken(2, 1);
-    this.#board.dropToken(2, 1);
-    this.#board.dropToken(3, 1);
-    this.#board.dropToken(1, 1);
-    this.#board.dropToken(2, 1);
+    const mockMoves = [0, 2, 2, 3, 1];
+
+    for (const move of mockMoves) {
+      console.clear();
+      this.#gui.paintBoard(this.#board.dropToken(move, 1));
+      await setTimeout(500);
+    }
   }
 }
