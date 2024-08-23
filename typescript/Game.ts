@@ -33,6 +33,8 @@ export default class Game {
     this.#board.dropToken(0, 1);
     this.#board.dropToken(2, 1);
     this.#board.dropToken(2, 1);
+    this.#board.dropToken(3, 1);
+    this.#board.dropToken(1, 1);
     this.#board.dropToken(2, 1);
   }
 }
