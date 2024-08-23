@@ -42,8 +42,7 @@ export default class Board {
       }
     }
 
-    // return { board: this.#board, maxConnection };
-    return this.#board;
+    return { board: this.#board, maxConnection };
   }
 
   #traverseUntilStopped(startPos: Coordinates, direction: Coordinates) {

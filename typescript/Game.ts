@@ -35,12 +35,24 @@ export default class Game {
     // do some test moves on the board
     if (!this.#board) throw new Error("Cannot find instance of board");
 
-    const mockMoves = [0, 2, 2, 3, 1];
+    // const mockMoves = [3, 1, 3, 2, 3, 4, 3, 5]; // player 1 wins vertical with last move skipped
+    // const mockMoves = [5, 0, 5, 1, 5, 2, 4, 3]; // player 2 wins horizontal
+    // const mockMoves = [0, 1, 1, 2, 2, 4, 2, 4, 3, 3, 3, 5, 3]; // player 1 wins diag
+    const mockMoves = [3, 3, 3, 3, 4, 6, 5, 5, 4, 4]; // player 2 wins diag
+    let playerNum: 1 | 2 = 1;
 
     for (const move of mockMoves) {
       console.clear();
-      this.#gui.paintBoard(this.#board.dropToken(move, 1));
+      const { maxConnection, board } = this.#board.dropToken(move, playerNum);
+      this.#gui.paintBoard(board);
+
+      if (maxConnection === 4) {
+        console.log(`Player ${playerNum} WINS!`);
+        break;
+      }
+
       await setTimeout(500);
+      playerNum = playerNum === 1 ? 2 : 1;
     }
   }
 }
