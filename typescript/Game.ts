@@ -8,7 +8,6 @@ import Player from "./Player.js";
 type GameOptions = {
   width?: number;
   height?: number;
-  // names and AI player enabled etc.
 };
 
 export default class Game {
@@ -37,7 +36,12 @@ export default class Game {
 
   run() {
     this.#setupGame();
-    this.#mockGameplay();
+    this.#configure();
+    false && this.#mockGameplay();
+  }
+
+  #configure() {
+    this.#gui.paintOptions({ p1: this.#playerOne, p2: this.#playerTwo });
   }
 
   #setupGame() {

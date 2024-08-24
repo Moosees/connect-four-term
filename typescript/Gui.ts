@@ -1,6 +1,8 @@
-import { number } from "@inquirer/prompts";
+import { number, select } from "@inquirer/prompts";
 import prompt from "inquirer-interactive-list-prompt";
 import { BoardMatrix } from "./Board.js";
+import { getOptionsChoices } from "./gui-utils.js";
+import { PlayerOptions } from "./Player.js";
 
 export default class Gui {
   async paintStart() {
@@ -14,6 +16,20 @@ export default class Gui {
     });
 
     console.log(answer);
+  }
+
+  async paintOptions(options: { p1: PlayerOptions; p2: PlayerOptions }) {
+    let selected = "menu";
+    const newOptions = { p1: { ...options.p1 }, p2: { ...options.p2 } };
+
+    while (selected !== "exit") {
+      const answer = await select({
+        message: "Available options:",
+        choices: getOptionsChoices(newOptions),
+      });
+      console.log(answer);
+      selected = answer;
+    }
   }
 
   paintBoard(board: BoardMatrix) {
