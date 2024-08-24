@@ -8,4 +8,5 @@ import Gui from "./Gui.js";
 // game.run();
 
 const gui = new Gui();
-gui.paintStart();
+// gui.paintStart();
+gui.paintTokenDropper("Yves", 7);

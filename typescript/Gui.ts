@@ -1,3 +1,4 @@
+import { number } from "@inquirer/prompts";
 import prompt from "inquirer-interactive-list-prompt";
 import { BoardMatrix } from "./Board.js";
 
@@ -26,5 +27,16 @@ export default class Gui {
       .join("\n");
 
     console.log(boardString + "\n");
+  }
+
+  async paintTokenDropper(playerName: string, numCols: number) {
+    const selectedCol = await number({
+      message: `${playerName}, please select a column to play: `,
+      min: 1,
+      max: numCols,
+      required: true,
+    });
+
+    console.log(selectedCol);
   }
 }
