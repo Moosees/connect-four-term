@@ -20,6 +20,6 @@
     "outDir": "../dist",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "../typings/inquirer-interactive-list-prompt.d.ts"],
   "exclude": ["node_modules"]
 }

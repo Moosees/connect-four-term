@@ -14,5 +14,9 @@
   "devDependencies": {
     "@types/node": "^22.5.0",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "inquirer": "^10.1.8",
+    "inquirer-interactive-list-prompt": "^1.0.4"
   }
 }
