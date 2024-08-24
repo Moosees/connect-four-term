@@ -1,7 +1,9 @@
-import Board from "./Board.js";
-import Gui from "./Gui.js";
 // @ts-ignore
 import { setTimeout } from "timers/promises";
+
+import Board from "./Board.js";
+import Gui from "./Gui.js";
+import Player from "./Player.js";
 
 type GameOptions = {
   width?: number;
@@ -14,11 +16,23 @@ export default class Game {
   #numRows;
   #board: Board | undefined;
   #gui;
+  #playerOne;
+  #playerTwo;
 
   constructor(options: GameOptions) {
     this.#gui = new Gui();
     this.#numCols = options.width || 7;
     this.#numRows = options.height || 6;
+    this.#playerOne = new Player({
+      isHuman: true,
+      name: "Player One",
+      difficulty: 1,
+    });
+    this.#playerTwo = new Player({
+      isHuman: true,
+      name: "Player Two",
+      difficulty: 1,
+    });
   }
 
   run() {
