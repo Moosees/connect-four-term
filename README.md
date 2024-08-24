@@ -9,16 +9,16 @@ A two player game that runs in your terminal, where you take turns dropping toke
 ### Logic
 
 - Interactive game loop
+- Gameloop works with two computer opponents (re-use mock gameplay for this?)
 - Easy computer opponent
 - Hard computer opponent
 - Handle invalid moves
 - Handle draws
 - Handle game reset
-- Remember names
 
 ### Gui
 
-- Setup/options screen
 - Current player indicator
-- User input for drops, names, options
 - Win screen
+- Show winning connection on board
+- Rework ui so screens fit together better
