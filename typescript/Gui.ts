@@ -29,7 +29,7 @@ export default class Gui {
         choices: getOptionsChoices(newOptions),
         default: selected,
       });
-      console.log(answer);
+
       selected = answer;
 
       if (answer === "p1ih") p1.isHuman = !p1.isHuman;
@@ -41,6 +41,8 @@ export default class Gui {
       else if (answer === "p2name")
         p2.name = await this.#paintNameChange(p2.name);
     }
+
+    return newOptions;
   }
 
   async #paintNameChange(oldName: string) {

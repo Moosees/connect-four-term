@@ -36,12 +36,18 @@ export default class Game {
 
   run() {
     this.#setupGame();
-    this.#configure();
-    false && this.#mockGameplay();
+    this.#mockGameplay();
   }
 
-  #configure() {
-    this.#gui.paintOptions({ p1: this.#playerOne, p2: this.#playerTwo });
+  async #configure() {
+    const { p1, p2 } = await this.#gui.paintOptions({
+      p1: this.#playerOne,
+      p2: this.#playerTwo,
+    });
+
+    this.#playerOne = p1;
+    this.#playerTwo = p2;
+    console.log(this.#playerOne, this.#playerTwo);
   }
 
   #setupGame() {
@@ -50,6 +56,8 @@ export default class Game {
   }
 
   async #mockGameplay() {
+    await this.#configure();
+
     // do some test moves on the board
     if (!this.#board) throw new Error("Cannot find instance of board");
 
