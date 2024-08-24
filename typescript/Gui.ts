@@ -21,6 +21,7 @@ export default class Gui {
   async paintOptions(options: { p1: PlayerOptions; p2: PlayerOptions }) {
     let selected = "menu";
     const newOptions = { p1: { ...options.p1 }, p2: { ...options.p2 } };
+    const { p1, p2 } = newOptions;
 
     while (selected !== "exit") {
       const answer = await select({
@@ -30,6 +31,11 @@ export default class Gui {
       });
       console.log(answer);
       selected = answer;
+
+      if (answer === "p1ih") p1.isHuman = !p1.isHuman;
+      else if (answer === "p2ih") p2.isHuman = !p2.isHuman;
+      else if (answer === "p1diff") p1.difficulty = p1.difficulty === 1 ? 2 : 1;
+      else if (answer === "p2diff") p2.difficulty = p2.difficulty === 1 ? 2 : 1;
     }
   }
 
