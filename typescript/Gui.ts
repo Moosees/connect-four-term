@@ -26,6 +26,7 @@ export default class Gui {
       const answer = await select({
         message: "Available options:",
         choices: getOptionsChoices(newOptions),
+        default: selected,
       });
       console.log(answer);
       selected = answer;
