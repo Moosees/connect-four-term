@@ -1,4 +1,4 @@
-import { number, select } from "@inquirer/prompts";
+import { input, number, select } from "@inquirer/prompts";
 import prompt from "inquirer-interactive-list-prompt";
 import { BoardMatrix } from "./Board.js";
 import { getOptionsChoices } from "./gui-utils.js";
@@ -36,7 +36,19 @@ export default class Gui {
       else if (answer === "p2ih") p2.isHuman = !p2.isHuman;
       else if (answer === "p1diff") p1.difficulty = p1.difficulty === 1 ? 2 : 1;
       else if (answer === "p2diff") p2.difficulty = p2.difficulty === 1 ? 2 : 1;
+      else if (answer === "p1name")
+        p1.name = await this.#paintNameChange(p1.name);
+      else if (answer === "p2name")
+        p2.name = await this.#paintNameChange(p2.name);
     }
+  }
+
+  async #paintNameChange(oldName: string) {
+    return await input({
+      message: "New name:",
+      default: oldName,
+      required: true,
+    });
   }
 
   paintBoard(board: BoardMatrix) {
