@@ -1,8 +1,4 @@
-export type PlayerOptions = {
-  isHuman: boolean;
-  name: string;
-  difficulty: 1 | 2;
-};
+import { PlayerOptions } from "../types.js";
 
 export default class Player {
   isHuman;

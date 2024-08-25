@@ -2,7 +2,6 @@
 import { setTimeout } from "timers/promises";
 
 import Board from "./Board.js";
-import Gui from "./Gui.js";
 import Player from "./Player.js";
 
 type GameOptions = {
@@ -14,12 +13,12 @@ export default class Game {
   #numCols;
   #numRows;
   #board: Board | undefined;
-  #gui;
+  #userInterface;
   #playerOne;
   #playerTwo;
 
-  constructor(options: GameOptions) {
-    this.#gui = new Gui();
+  constructor(userInterface, options: GameOptions) {
+    this.#userInterface = userInterface;
     this.#numCols = options.width || 7;
     this.#numRows = options.height || 6;
     this.#playerOne = new Player({
@@ -40,7 +39,7 @@ export default class Game {
   }
 
   async #configure() {
-    const { p1, p2 } = await this.#gui.paintOptions({
+    const { p1, p2 } = await this.#userInterface.paintOptions({
       p1: this.#playerOne,
       p2: this.#playerTwo,
     });
@@ -70,7 +69,7 @@ export default class Game {
     for (const move of mockMoves) {
       console.clear();
       const { maxConnection, board } = this.#board.dropToken(move, playerNum);
-      this.#gui.paintBoard(board);
+      this.#userInterface.paintBoard(board);
 
       if (maxConnection === 4) {
         console.log(`Player ${playerNum} WINS!`);

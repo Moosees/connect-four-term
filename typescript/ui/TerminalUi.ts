@@ -1,10 +1,9 @@
 import { input, number, select } from "@inquirer/prompts";
 import prompt from "inquirer-interactive-list-prompt";
-import { BoardMatrix } from "./Board.js";
-import { getOptionsChoices } from "./gui-utils.js";
-import { PlayerOptions } from "./Player.js";
+import { BoardMatrix, PlayerOptions } from "../types.js";
+import { getOptionsChoices } from "./terminalUi-utils.js";
 
-export default class Gui {
+export default class TerminalUi {
   async paintStart() {
     const answer = await prompt({
       message: "Please select an option",

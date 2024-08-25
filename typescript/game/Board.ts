@@ -1,8 +1,5 @@
+import { BoardCell, BoardCoordinate, BoardMatrix } from "../types.js";
 import { traversals } from "./board-utils.js";
-
-type CellValues = 0 | 1 | 2;
-type Coordinates = { x: number; y: number };
-export type BoardMatrix = CellValues[][];
 
 export default class Board {
   #board;
@@ -21,7 +18,7 @@ export default class Board {
       .map((_x) => new Array(numRows).fill(0));
   }
 
-  dropToken(col: number, playerNum: CellValues) {
+  dropToken(col: number, playerNum: BoardCell) {
     const currentCol = this.#board[col];
     let maxConnection = 1;
 
@@ -45,7 +42,7 @@ export default class Board {
     return { board: this.#board, maxConnection };
   }
 
-  #traverseUntilStopped(startPos: Coordinates, direction: Coordinates) {
+  #traverseUntilStopped(startPos: BoardCoordinate, direction: BoardCoordinate) {
     const validCellValue = this.#board[startPos.x][startPos.y];
     let currentX = startPos.x;
     let currentY = startPos.y;
@@ -71,7 +68,7 @@ export default class Board {
     return cellsMoved;
   }
 
-  #findMaxConnection(lastPlayedCell: Coordinates) {
+  #findMaxConnection(lastPlayedCell: BoardCoordinate) {
     let maxConnection = 1;
 
     for (let move of traversals) {

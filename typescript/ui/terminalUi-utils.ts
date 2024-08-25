@@ -1,4 +1,4 @@
-import { PlayerOptions } from "./Player.js";
+import { PlayerOptions } from "../types.js";
 
 export const getOptionsChoices = (options: {
   p1: PlayerOptions;
