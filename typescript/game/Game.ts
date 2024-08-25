@@ -1,6 +1,7 @@
 // @ts-ignore
 import { setTimeout } from "timers/promises";
 
+import { UserInterface } from "../types.js";
 import Board from "./Board.js";
 import Player from "./Player.js";
 
@@ -17,7 +18,7 @@ export default class Game {
   #playerOne;
   #playerTwo;
 
-  constructor(userInterface, options: GameOptions) {
+  constructor(userInterface: UserInterface, options: GameOptions) {
     this.#userInterface = userInterface;
     this.#numCols = options.width || 7;
     this.#numRows = options.height || 6;

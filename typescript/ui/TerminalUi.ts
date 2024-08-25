@@ -1,9 +1,9 @@
 import { input, number, select } from "@inquirer/prompts";
 import prompt from "inquirer-interactive-list-prompt";
-import { BoardMatrix, PlayerOptions } from "../types.js";
+import { BoardMatrix, GameOptions, UserInterface } from "../types.js";
 import { getOptionsChoices } from "./terminalUi-utils.js";
 
-export default class TerminalUi {
+export default class TerminalUi implements UserInterface {
   async paintStart() {
     const answer = await prompt({
       message: "Please select an option",
@@ -14,10 +14,13 @@ export default class TerminalUi {
       ],
     });
 
-    console.log(answer);
+    if (answer !== "start" && answer !== "options" && answer !== "quit")
+      throw new Error("Invalid choice");
+
+    return answer;
   }
 
-  async paintOptions(options: { p1: PlayerOptions; p2: PlayerOptions }) {
+  async paintOptions(options: GameOptions) {
     let selected = "menu";
     const newOptions = { p1: { ...options.p1 }, p2: { ...options.p2 } };
     const { p1, p2 } = newOptions;
@@ -63,6 +66,7 @@ export default class TerminalUi {
       .join("\n");
 
     console.log(boardString + "\n");
+    return "done" as const;
   }
 
   async paintTokenDropper(playerName: string, numCols: number) {
@@ -73,6 +77,8 @@ export default class TerminalUi {
       required: true,
     });
 
-    console.log(selectedCol);
+    if (!selectedCol) throw new Error("Invalid play");
+
+    return selectedCol;
   }
 }
