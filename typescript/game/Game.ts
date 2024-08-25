@@ -34,9 +34,14 @@ export default class Game {
     });
   }
 
-  run() {
-    this.#setupGame();
-    this.#mockGameplay();
+  async run() {
+    while (true) {
+      const startChoice = await this.#userInterface.paintStart();
+      if (startChoice === "quit") return;
+      if (startChoice === "start") await this.#startGame();
+      else if (startChoice === "options") await this.#configure();
+      else this.#mockGameplay();
+    }
   }
 
   async #configure() {
@@ -50,9 +55,32 @@ export default class Game {
     console.log(this.#playerOne, this.#playerTwo);
   }
 
-  #setupGame() {
-    // create or reset board, update size or players if needed
+  async #startGame() {
     this.#board = new Board(this.#numCols, this.#numRows);
+
+    let currentConnection = 0;
+    let currentPlayer: 1 | 2 = 1;
+
+    while (currentConnection < 4) {
+      const playerName =
+        currentPlayer === 1 ? this.#playerOne.name : this.#playerTwo.name;
+
+      const currentMove = await this.#userInterface.paintTokenDropper(
+        playerName,
+        this.#numCols,
+      );
+      const { maxConnection, board } = this.#board.dropToken(
+        currentMove,
+        currentPlayer,
+      );
+
+      this.#userInterface.paintBoard(board);
+
+      currentConnection = maxConnection;
+      if (maxConnection < 4) currentPlayer = currentPlayer === 1 ? 2 : 1;
+    }
+
+    console.log(`Player ${currentPlayer} probably won`);
   }
 
   async #mockGameplay() {

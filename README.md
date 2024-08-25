@@ -8,17 +8,19 @@ A two player game that runs in your terminal, where you take turns dropping toke
 
 ### Logic
 
-- Interactive game loop
-- Gameloop works with two computer opponents (re-use mock gameplay for this?)
 - Easy computer opponent
 - Hard computer opponent
+- Game loop with computer opponent
+- Gameloop works with two computer opponents (re-use mock gameplay for this?)
 - Handle invalid moves
 - Handle draws
-- Handle game reset
+- Game reset updates names and isHuman
 
 ### Gui
 
-- Current player indicator
+- paint board before first drop and clean history between turns
+- Indicator for latest move? only for computer opponsent?
 - Win screen
 - Show winning connection on board
 - Rework ui so screens fit together better
+- Add option to quit in the middle of a game
