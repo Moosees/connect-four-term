@@ -74,17 +74,17 @@ export default class Game {
         ? await this.#userInterface.paintTokenDropper(name, this.#numCols)
         : computer[currentPlayer].calculateNextDrop();
 
-      const { maxConnection, matrix } = this.#board.dropToken(
+      const { maxConnectionFound, boardMatrix } = this.#board.dropToken(
         currentMove,
         currentPlayer,
       );
 
-      this.#userInterface.paintBoard(matrix);
+      this.#userInterface.paintBoard(boardMatrix);
 
-      currentConnection = maxConnection;
-      if (maxConnection < 4) {
+      currentConnection = maxConnectionFound;
+      if (maxConnectionFound < 4) {
         currentPlayer = currentPlayer === 1 ? 2 : 1;
-        computer[currentPlayer].analyzeBoard(matrix);
+        computer[currentPlayer].analyzeBoard(boardMatrix);
       }
     }
 
@@ -105,10 +105,13 @@ export default class Game {
 
     for (const move of mockMoves) {
       console.clear();
-      const { maxConnection, matrix } = this.#board.dropToken(move, playerNum);
-      this.#userInterface.paintBoard(matrix);
+      const { maxConnectionFound, boardMatrix } = this.#board.dropToken(
+        move,
+        playerNum,
+      );
+      this.#userInterface.paintBoard(boardMatrix);
 
-      if (maxConnection === 4) {
+      if (maxConnectionFound === 4) {
         console.log(`Player ${playerNum} WINS!`);
         break;
       }

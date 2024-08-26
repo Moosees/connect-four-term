@@ -44,7 +44,7 @@ export default class Board {
       }
     }
 
-    return { matrix: this.#board, maxConnection };
+    return { boardMatrix: this.#board, maxConnectionFound: maxConnection };
   }
 
   #traverseUntilStopped(startPos: BoardCoordinate, direction: BoardCoordinate) {

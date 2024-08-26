@@ -8,13 +8,11 @@ A two player game that runs in your terminal, where you take turns dropping toke
 
 ### Logic
 
-- Easy computer opponent
 - Hard computer opponent
-- Game loop with computer opponent
-- Gameloop works with two computer opponents (re-use mock gameplay for this?)
+- Add delay for computer opponent moves
 - Handle invalid moves
 - Handle draws
-- Game reset updates names and isHuman
+- Only create instances of computer opponents when they are not human
 
 ### Gui
 
