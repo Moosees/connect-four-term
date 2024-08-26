@@ -1,0 +1,19 @@
+import { BoardMatrix, ComputerOpponent } from "../types.js";
+
+export class EasyComputer implements ComputerOpponent {
+  name = "Runar Random";
+  #possibleDrops: number[] = [];
+
+  analyzeBoard(board: BoardMatrix): void {
+    this.#possibleDrops = board.reduce((acc: number[], col, i) => {
+      if (col[0] === 0) acc.push(i);
+      return acc;
+    }, []);
+  }
+
+  calculateNextDrop(): number {
+    const randomNumber = Math.floor(Math.random() * this.#possibleDrops.length);
+
+    return this.#possibleDrops[randomNumber];
+  }
+}
