@@ -23,19 +23,20 @@ export default class Board {
   }
 
   dropToken(col: number, playerNum: BoardCell) {
-    const currentCol = this.#board[col];
+    const currentCol = this.#board[col - 1];
     let maxConnection = 1;
+    console.log(currentCol);
 
     if (currentCol[0] !== 0) throw new Error("Invalid move, col is full");
 
     for (let i = 0; i <= currentCol.length; ++i) {
-      if (currentCol[i] !== 0 || i === currentCol.length) {
+      if (i === currentCol.length || currentCol[i] !== 0) {
         currentCol[i - 1] = playerNum;
         console.log(
           `adding token ${playerNum} to col ${col}, it falls to row ${i - 1}`,
         );
         maxConnection = this.#findMaxConnection({
-          x: col,
+          x: col - 1,
           y: i - 1,
         });
         console.log(`max connection found: ${maxConnection}`);
