@@ -4,6 +4,7 @@ import { setTimeout } from "timers/promises";
 import { UserInterface } from "../types.js";
 import Board from "./Board.js";
 import Player from "./Player.js";
+import { EasyComputer } from "../opponents/Easy.js";
 
 type GameOptions = {
   width?: number;
@@ -57,27 +58,34 @@ export default class Game {
 
   async #startGame() {
     this.#board = new Board(this.#numCols, this.#numRows);
+    const computer = {
+      1: new EasyComputer(this.#board.matrix),
+      2: new EasyComputer(this.#board.matrix),
+    };
 
     let currentConnection = 0;
     let currentPlayer: 1 | 2 = 1;
 
     while (currentConnection < 4) {
-      const playerName =
-        currentPlayer === 1 ? this.#playerOne.name : this.#playerTwo.name;
+      const { name, isHuman } =
+        currentPlayer === 1 ? this.#playerOne : this.#playerTwo;
 
-      const currentMove = await this.#userInterface.paintTokenDropper(
-        playerName,
-        this.#numCols,
-      );
-      const { maxConnection, board } = this.#board.dropToken(
+      const currentMove = isHuman
+        ? await this.#userInterface.paintTokenDropper(name, this.#numCols)
+        : computer[currentPlayer].calculateNextDrop();
+
+      const { maxConnection, matrix } = this.#board.dropToken(
         currentMove,
         currentPlayer,
       );
 
-      this.#userInterface.paintBoard(board);
+      this.#userInterface.paintBoard(matrix);
 
       currentConnection = maxConnection;
-      if (maxConnection < 4) currentPlayer = currentPlayer === 1 ? 2 : 1;
+      if (maxConnection < 4) {
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+        computer[currentPlayer].analyzeBoard(matrix);
+      }
     }
 
     console.log(`Player ${currentPlayer} probably won`);
@@ -97,8 +105,8 @@ export default class Game {
 
     for (const move of mockMoves) {
       console.clear();
-      const { maxConnection, board } = this.#board.dropToken(move, playerNum);
-      this.#userInterface.paintBoard(board);
+      const { maxConnection, matrix } = this.#board.dropToken(move, playerNum);
+      this.#userInterface.paintBoard(matrix);
 
       if (maxConnection === 4) {
         console.log(`Player ${playerNum} WINS!`);

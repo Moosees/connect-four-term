@@ -12,6 +12,10 @@ export default class Board {
     this.#numRows = numRows;
   }
 
+  get matrix() {
+    return this.#board;
+  }
+
   #createBoard(numCols: number, numRows: number): BoardMatrix {
     return new Array(numCols)
       .fill(undefined)
@@ -39,7 +43,7 @@ export default class Board {
       }
     }
 
-    return { board: this.#board, maxConnection };
+    return { matrix: this.#board, maxConnection };
   }
 
   #traverseUntilStopped(startPos: BoardCoordinate, direction: BoardCoordinate) {

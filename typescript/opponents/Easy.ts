@@ -4,6 +4,10 @@ export class EasyComputer implements ComputerOpponent {
   name = "Runar Random";
   #possibleDrops: number[] = [];
 
+  constructor(board: BoardMatrix) {
+    this.analyzeBoard(board);
+  }
+
   analyzeBoard(board: BoardMatrix): void {
     this.#possibleDrops = board.reduce((acc: number[], col, i) => {
       if (col[0] === 0) acc.push(i + 1);
