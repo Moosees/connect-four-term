@@ -6,7 +6,7 @@ export class EasyComputer implements ComputerOpponent {
 
   analyzeBoard(board: BoardMatrix): void {
     this.#possibleDrops = board.reduce((acc: number[], col, i) => {
-      if (col[0] === 0) acc.push(i);
+      if (col[0] === 0) acc.push(i + 1);
       return acc;
     }, []);
   }
