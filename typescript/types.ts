@@ -14,7 +14,10 @@ export type GameOptions = { p1: PlayerOptions; p2: PlayerOptions };
 
 export interface UserInterface {
   paintStart(): Promise<UIStartChoices>;
-  paintOptions(options: GameOptions): Promise<GameOptions>;
+  paintOptions(
+    options: GameOptions,
+    opponents: OpponentInitializer[],
+  ): Promise<GameOptions>;
   paintBoard(board: BoardMatrix): "done";
   paintTokenDropper(playerName: string, numCols: number): Promise<number>;
 }

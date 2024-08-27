@@ -1,6 +1,11 @@
 import { input, number, select } from "@inquirer/prompts";
 import prompt from "inquirer-interactive-list-prompt";
-import { BoardMatrix, GameOptions, UserInterface } from "../types.js";
+import {
+  BoardMatrix,
+  GameOptions,
+  OpponentInitializer,
+  UserInterface,
+} from "../types.js";
 import { getOptionsChoices } from "./terminalUi-utils.js";
 
 export default class TerminalUi implements UserInterface {
@@ -20,7 +25,7 @@ export default class TerminalUi implements UserInterface {
     return answer;
   }
 
-  async paintOptions(options: GameOptions) {
+  async paintOptions(options: GameOptions, opponents: OpponentInitializer[]) {
     let selected = "menu";
     const newOptions = { p1: { ...options.p1 }, p2: { ...options.p2 } };
     const { p1, p2 } = newOptions;
@@ -36,8 +41,10 @@ export default class TerminalUi implements UserInterface {
 
       if (answer === "p1ih") p1.isHuman = !p1.isHuman;
       else if (answer === "p2ih") p2.isHuman = !p2.isHuman;
-      else if (answer === "p1diff") p1.difficulty = p1.difficulty === 1 ? 2 : 1;
-      else if (answer === "p2diff") p2.difficulty = p2.difficulty === 1 ? 2 : 1;
+      else if (answer === "p1diff")
+        p1.difficulty = await this.#paintAIchange(p1.difficulty, opponents);
+      else if (answer === "p2diff")
+        p2.difficulty = await this.#paintAIchange(p2.difficulty, opponents);
       else if (answer === "p1name")
         p1.name = await this.#paintNameChange(p1.name);
       else if (answer === "p2name")
@@ -53,6 +60,14 @@ export default class TerminalUi implements UserInterface {
       default: oldName,
       required: true,
     });
+  }
+
+  async #paintAIchange(
+    currentDifficulty: 1 | 2,
+    oppoents: OpponentInitializer[],
+  ) {
+    console.log(currentDifficulty, oppoents);
+    return 1 as const;
   }
 
   paintBoard(board: BoardMatrix) {

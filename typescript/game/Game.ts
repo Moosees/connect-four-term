@@ -18,6 +18,7 @@ export default class Game {
   #userInterface;
   #playerOne;
   #playerTwo;
+  #opponents;
 
   constructor(
     userInterface: UserInterface,
@@ -37,7 +38,7 @@ export default class Game {
       name: "Player Two",
       difficulty: 1,
     });
-    console.log(opponents);
+    this.#opponents = opponents;
   }
 
   async run() {
@@ -51,10 +52,13 @@ export default class Game {
   }
 
   async #configure() {
-    const { p1, p2 } = await this.#userInterface.paintOptions({
-      p1: this.#playerOne,
-      p2: this.#playerTwo,
-    });
+    const { p1, p2 } = await this.#userInterface.paintOptions(
+      {
+        p1: this.#playerOne,
+        p2: this.#playerTwo,
+      },
+      this.#opponents,
+    );
 
     this.#playerOne.updatePlayer(p1);
     this.#playerTwo.updatePlayer(p2);
