@@ -24,8 +24,8 @@ export const getOptionsChoices = (options: {
           value: "p1name",
         }
       : {
-          name: `Change Player One difficulty (currently: ${p1.difficulty === 1 ? "Easy" : "Hard"})`,
-          value: "p1diff",
+          name: `Change first opponent`,
+          value: "p1opponent",
         },
   );
 
@@ -36,8 +36,8 @@ export const getOptionsChoices = (options: {
           value: "p2name",
         }
       : {
-          name: `Change Player Two difficulty (currently: ${p2.difficulty === 1 ? "Easy" : "Hard"})`,
-          value: "p2diff",
+          name: `Change second opponent`,
+          value: "p2opponent",
         },
   );
 

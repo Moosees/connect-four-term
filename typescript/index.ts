@@ -4,7 +4,12 @@ import { OpponentInitializer } from "./types.js";
 import TerminalUi from "./ui/TerminalUi.js";
 
 const opponents: OpponentInitializer[] = [
-  { name: "Runar Random", difficulty: 1, constructor: EasyComputer },
+  {
+    id: 1,
+    name: "Runar Random",
+    difficulty: "Easy",
+    constructor: EasyComputer,
+  },
 ];
 
 console.log("Create new Game");

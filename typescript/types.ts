@@ -7,7 +7,7 @@ export type BoardMatrix = BoardCell[][];
 export type PlayerOptions = {
   isHuman: boolean;
   name: string;
-  difficulty: 1 | 2;
+  opponentId: number;
 };
 
 export type GameOptions = { p1: PlayerOptions; p2: PlayerOptions };
@@ -28,7 +28,8 @@ export interface ComputerOpponent {
 }
 
 export type OpponentInitializer = {
+  id: number;
   name: string;
-  difficulty: number;
+  difficulty: string;
   constructor: new (board: BoardMatrix) => ComputerOpponent;
 };

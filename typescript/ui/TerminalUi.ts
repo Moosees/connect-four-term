@@ -41,10 +41,10 @@ export default class TerminalUi implements UserInterface {
 
       if (answer === "p1ih") p1.isHuman = !p1.isHuman;
       else if (answer === "p2ih") p2.isHuman = !p2.isHuman;
-      else if (answer === "p1diff")
-        p1.difficulty = await this.#paintAIchange(p1.difficulty, opponents);
-      else if (answer === "p2diff")
-        p2.difficulty = await this.#paintAIchange(p2.difficulty, opponents);
+      else if (answer === "p1opponent")
+        p1.opponentId = await this.#paintAIchange(p1.opponentId, opponents);
+      else if (answer === "p2opponent")
+        p2.opponentId = await this.#paintAIchange(p2.opponentId, opponents);
       else if (answer === "p1name")
         p1.name = await this.#paintNameChange(p1.name);
       else if (answer === "p2name")
@@ -62,11 +62,8 @@ export default class TerminalUi implements UserInterface {
     });
   }
 
-  async #paintAIchange(
-    currentDifficulty: 1 | 2,
-    oppoents: OpponentInitializer[],
-  ) {
-    console.log(currentDifficulty, oppoents);
+  async #paintAIchange(currentId: number, oppoents: OpponentInitializer[]) {
+    console.log(currentId, oppoents);
     return 1 as const;
   }
 

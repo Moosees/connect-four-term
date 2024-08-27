@@ -31,12 +31,12 @@ export default class Game {
     this.#playerOne = new Player({
       isHuman: true,
       name: "Player One",
-      difficulty: 1,
+      opponentId: 1,
     });
     this.#playerTwo = new Player({
       isHuman: true,
       name: "Player Two",
-      difficulty: 1,
+      opponentId: 1,
     });
     this.#opponents = opponents;
   }
