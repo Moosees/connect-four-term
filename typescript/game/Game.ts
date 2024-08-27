@@ -56,8 +56,8 @@ export default class Game {
       p2: this.#playerTwo,
     });
 
-    this.#playerOne = p1;
-    this.#playerTwo = p2;
+    this.#playerOne.updatePlayer(p1);
+    this.#playerTwo.updatePlayer(p2);
     console.log(this.#playerOne, this.#playerTwo);
   }
 

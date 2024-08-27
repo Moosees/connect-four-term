@@ -9,5 +9,12 @@ export default class Player {
     this.isHuman = options.isHuman;
     this.name = options.name;
     this.difficulty = options.difficulty;
+    // NOTE: for some reason calling updatePlayer in constructor breaks implied types
+  }
+
+  updatePlayer(options: PlayerOptions) {
+    this.isHuman = options.isHuman;
+    this.name = options.name;
+    this.difficulty = options.difficulty;
   }
 }
