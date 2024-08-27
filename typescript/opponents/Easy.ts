@@ -1,7 +1,6 @@
 import { BoardMatrix, ComputerOpponent } from "../types.js";
 
 export class EasyComputer implements ComputerOpponent {
-  name = "Runar Random";
   #possibleDrops: number[] = [];
 
   constructor(board: BoardMatrix) {

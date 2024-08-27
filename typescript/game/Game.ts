@@ -1,10 +1,10 @@
 // @ts-ignore
 import { setTimeout } from "timers/promises";
 
-import { UserInterface } from "../types.js";
+import { EasyComputer } from "../opponents/Easy.js";
+import { OpponentInitializer, UserInterface } from "../types.js";
 import Board from "./Board.js";
 import Player from "./Player.js";
-import { EasyComputer } from "../opponents/Easy.js";
 
 type GameOptions = {
   width?: number;
@@ -19,7 +19,11 @@ export default class Game {
   #playerOne;
   #playerTwo;
 
-  constructor(userInterface: UserInterface, options: GameOptions) {
+  constructor(
+    userInterface: UserInterface,
+    opponents: OpponentInitializer[],
+    options: GameOptions,
+  ) {
     this.#userInterface = userInterface;
     this.#numCols = options.width || 7;
     this.#numRows = options.height || 6;
@@ -33,6 +37,7 @@ export default class Game {
       name: "Player Two",
       difficulty: 1,
     });
+    console.log(opponents);
   }
 
   async run() {

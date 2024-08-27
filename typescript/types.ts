@@ -20,7 +20,12 @@ export interface UserInterface {
 }
 
 export interface ComputerOpponent {
-  name: string;
   analyzeBoard(board: BoardMatrix): void;
   calculateNextDrop(): number;
 }
+
+export type OpponentInitializer = {
+  name: string;
+  difficulty: number;
+  constructor: new (board: BoardMatrix) => ComputerOpponent;
+};
