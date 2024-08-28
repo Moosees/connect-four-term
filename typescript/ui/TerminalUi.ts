@@ -51,6 +51,7 @@ export default class TerminalUi implements UserInterface {
         p2.name = await this.#paintNameChange(p2.name);
     }
 
+    console.log(newOptions);
     return newOptions;
   }
 
@@ -63,8 +64,14 @@ export default class TerminalUi implements UserInterface {
   }
 
   async #paintAIchange(currentId: number, oppoents: OpponentInitializer[]) {
-    console.log(currentId, oppoents);
-    return 1 as const;
+    return await select({
+      message: "Select an opponent",
+      default: currentId,
+      choices: oppoents.map((opponent) => ({
+        name: `${opponent.name} (${opponent.difficulty})`,
+        value: opponent.id,
+      })),
+    });
   }
 
   paintBoard(board: BoardMatrix) {

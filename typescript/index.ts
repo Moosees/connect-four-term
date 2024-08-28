@@ -10,6 +10,12 @@ const opponents: OpponentInitializer[] = [
     difficulty: "Easy",
     constructor: EasyComputer,
   },
+  {
+    id: 2,
+    name: "Test",
+    difficulty: "Easy",
+    constructor: EasyComputer,
+  },
 ];
 
 console.log("Create new Game");
