@@ -22,6 +22,10 @@ export default class Board {
       .map((_x) => new Array(numRows).fill(0));
   }
 
+  checkIsDraw() {
+    return this.#board.every((col) => col[0] !== 0);
+  }
+
   dropToken(col: number, playerNum: BoardCell) {
     const currentCol = this.#board[col - 1];
     let maxConnection = 1;

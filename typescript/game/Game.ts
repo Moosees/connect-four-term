@@ -72,6 +72,7 @@ export default class Game {
     this.#playerTwo.initializeOpponent(this.#opponents, this.#board.matrix);
 
     let currentPlayer: 1 | 2 = 1;
+    let isDraw = false;
 
     while (true) {
       const player = currentPlayer === 1 ? this.#playerOne : this.#playerTwo;
@@ -92,13 +93,17 @@ export default class Game {
       this.#userInterface.paintBoard(boardMatrix);
 
       if (maxConnectionFound >= 4) break;
+      if (this.#board.checkIsDraw()) {
+        isDraw = true;
+        break;
+      }
 
       this.#playerOne.opponent?.analyzeBoard(boardMatrix);
       this.#playerTwo.opponent?.analyzeBoard(boardMatrix);
       currentPlayer = currentPlayer === 1 ? 2 : 1;
     }
 
-    console.log(`Player ${currentPlayer} probably won`);
+    console.log(isDraw ? "Draw!" : `Player ${currentPlayer} probably won`);
     this.run();
   }
 }
