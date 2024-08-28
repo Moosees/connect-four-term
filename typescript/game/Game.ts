@@ -1,7 +1,6 @@
 // @ts-ignore
 import { setTimeout } from "timers/promises";
 
-import { EasyComputer } from "../opponents/Easy.js";
 import { OpponentInitializer, UserInterface } from "../types.js";
 import Board from "./Board.js";
 import Player from "./Player.js";
@@ -62,27 +61,27 @@ export default class Game {
 
     this.#playerOne.updatePlayer(p1);
     this.#playerTwo.updatePlayer(p2);
-    console.log(this.#playerOne, this.#playerTwo);
   }
 
   async #startGame() {
     this.#board = new Board(this.#numCols, this.#numRows);
-    const computer = {
-      1: new EasyComputer(this.#board.matrix),
-      2: new EasyComputer(this.#board.matrix),
-    };
+    this.#playerOne.initializeOpponent(this.#opponents, this.#board.matrix);
+    this.#playerTwo.initializeOpponent(this.#opponents, this.#board.matrix);
 
     let currentConnection = 0;
     let currentPlayer: 1 | 2 = 1;
 
     while (currentConnection < 4) {
-      const { name, isHuman } =
-        currentPlayer === 1 ? this.#playerOne : this.#playerTwo;
+      const player = currentPlayer === 1 ? this.#playerOne : this.#playerTwo;
 
-      const currentMove = isHuman
-        ? await this.#userInterface.paintTokenDropper(name, this.#numCols)
-        : computer[currentPlayer].calculateNextDrop();
+      const currentMove = player.isHuman
+        ? await this.#userInterface.paintTokenDropper(
+            player.name,
+            this.#numCols,
+          )
+        : player.opponent?.calculateNextDrop(); // NOTE: Should always exist if isHuman is false
 
+      if (!currentMove) throw new Error("Failed to calculate next move");
       const { maxConnectionFound, boardMatrix } = this.#board.dropToken(
         currentMove,
         currentPlayer,
@@ -93,7 +92,7 @@ export default class Game {
       currentConnection = maxConnectionFound;
       if (maxConnectionFound < 4) {
         currentPlayer = currentPlayer === 1 ? 2 : 1;
-        computer[currentPlayer].analyzeBoard(boardMatrix);
+        player.opponent?.analyzeBoard(boardMatrix);
       }
     }
 
