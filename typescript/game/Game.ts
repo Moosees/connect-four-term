@@ -43,9 +43,13 @@ export default class Game {
   async run() {
     while (true) {
       const startChoice = await this.#userInterface.paintStart();
+
       if (startChoice === "quit") return;
-      if (startChoice === "start") await this.#startGame();
-      else if (startChoice === "options") await this.#configure();
+      if (startChoice === "start") {
+        await this.#startGame();
+        return;
+      }
+      if (startChoice === "options") await this.#configure();
     }
   }
 
@@ -67,10 +71,9 @@ export default class Game {
     this.#playerOne.initializeOpponent(this.#opponents, this.#board.matrix);
     this.#playerTwo.initializeOpponent(this.#opponents, this.#board.matrix);
 
-    let currentConnection = 0;
     let currentPlayer: 1 | 2 = 1;
 
-    while (currentConnection < 4) {
+    while (true) {
       const player = currentPlayer === 1 ? this.#playerOne : this.#playerTwo;
 
       const currentMove = player.isHuman
@@ -88,14 +91,14 @@ export default class Game {
 
       this.#userInterface.paintBoard(boardMatrix);
 
-      currentConnection = maxConnectionFound;
-      if (maxConnectionFound < 4) {
-        this.#playerOne.opponent?.analyzeBoard(boardMatrix);
-        this.#playerTwo.opponent?.analyzeBoard(boardMatrix);
-        currentPlayer = currentPlayer === 1 ? 2 : 1;
-      }
+      if (maxConnectionFound >= 4) break;
+
+      this.#playerOne.opponent?.analyzeBoard(boardMatrix);
+      this.#playerTwo.opponent?.analyzeBoard(boardMatrix);
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
     }
 
     console.log(`Player ${currentPlayer} probably won`);
+    this.run();
   }
 }
