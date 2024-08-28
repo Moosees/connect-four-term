@@ -90,8 +90,9 @@ export default class Game {
 
       currentConnection = maxConnectionFound;
       if (maxConnectionFound < 4) {
+        this.#playerOne.opponent?.analyzeBoard(boardMatrix);
+        this.#playerTwo.opponent?.analyzeBoard(boardMatrix);
         currentPlayer = currentPlayer === 1 ? 2 : 1;
-        player.opponent?.analyzeBoard(boardMatrix);
       }
     }
 
