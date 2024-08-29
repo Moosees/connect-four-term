@@ -25,6 +25,7 @@ export default class TerminalUi implements UserInterface {
     return answer;
   }
 
+  @exitErrorHandler
   async paintOptions(options: GameOptions, opponents: OpponentInitializer[]) {
     let selected = "menu";
     const newOptions = { p1: { ...options.p1 }, p2: { ...options.p2 } };
@@ -37,7 +38,7 @@ export default class TerminalUi implements UserInterface {
         default: selected,
       });
 
-      selected = answer;
+      selected = answer || "menu";
 
       if (answer === "p1ih") p1.isHuman = !p1.isHuman;
       else if (answer === "p2ih") p2.isHuman = !p2.isHuman;
@@ -55,6 +56,7 @@ export default class TerminalUi implements UserInterface {
     return newOptions;
   }
 
+  @exitErrorHandler
   async #paintNameChange(oldName: string) {
     return await input({
       message: "New name:",
@@ -63,6 +65,7 @@ export default class TerminalUi implements UserInterface {
     });
   }
 
+  @exitErrorHandler
   async #paintAIchange(currentId: number, oppoents: OpponentInitializer[]) {
     return await select({
       message: "Select an opponent",
@@ -88,6 +91,7 @@ export default class TerminalUi implements UserInterface {
     return "done" as const;
   }
 
+  @exitErrorHandler
   async paintTokenDropper(playerName: string, fullColumns: boolean[]) {
     let isFull = false;
 
@@ -110,4 +114,29 @@ export default class TerminalUi implements UserInterface {
       return selectedCol;
     }
   }
+}
+
+function exitErrorHandler<
+  This,
+  Args extends any[],
+  Return,
+  Fn extends (this: This, ...args: Args) => Promise<Return>,
+>(original: Fn, _context: ClassMethodDecoratorContext<This, Fn>) {
+  return async function replacement(
+    this: This,
+    ...args: Args
+  ): Promise<Return | undefined> {
+    try {
+      return await original.call(this, ...args);
+    } catch (error) {
+      if (error instanceof Error && error.name === "ExitPromptError") {
+        console.log("\nThanks for playing!\n");
+        process.exit();
+      } else if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("No idea what is going on");
+      }
+    }
+  } as Fn;
 }
