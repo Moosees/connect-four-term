@@ -19,7 +19,10 @@ export interface UserInterface {
     opponents: OpponentInitializer[],
   ): Promise<GameOptions>;
   paintBoard(board: BoardMatrix): "done";
-  paintTokenDropper(playerName: string, numCols: number): Promise<number>;
+  paintTokenDropper(
+    playerName: string,
+    fullColumns: boolean[],
+  ): Promise<number>;
 }
 
 export interface ComputerOpponent {

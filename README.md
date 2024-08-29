@@ -10,7 +10,6 @@ A two player game that runs in your terminal, where you take turns dropping toke
 
 - Hard computer opponent
 - Add delay for computer opponent moves
-- Handle invalid moves
 
 ### Gui
 

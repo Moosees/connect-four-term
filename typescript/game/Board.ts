@@ -26,6 +26,10 @@ export default class Board {
     return this.#board.every((col) => col[0] !== 0);
   }
 
+  findFullColumns() {
+    return this.#board.map((col) => col[0] !== 0);
+  }
+
   dropToken(col: number, playerNum: BoardCell) {
     const currentCol = this.#board[col - 1];
     let maxConnection = 1;

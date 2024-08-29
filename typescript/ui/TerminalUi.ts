@@ -88,16 +88,26 @@ export default class TerminalUi implements UserInterface {
     return "done" as const;
   }
 
-  async paintTokenDropper(playerName: string, numCols: number) {
-    const selectedCol = await number({
-      message: `${playerName}, please select a column to play: `,
-      min: 1,
-      max: numCols,
-      required: true,
-    });
+  async paintTokenDropper(playerName: string, fullColumns: boolean[]) {
+    let isFull = false;
 
-    if (!selectedCol) throw new Error("Invalid play");
+    while (true) {
+      const selectedCol = await number({
+        message: isFull
+          ? "Column is full, please try again..."
+          : `${playerName}, please select a column to play: `,
+        min: 1,
+        max: fullColumns.length,
+        required: true,
+      });
 
-    return selectedCol;
+      if (!selectedCol) throw new Error("Selected column must be a number");
+      if (fullColumns[selectedCol - 1]) {
+        isFull = true;
+        continue;
+      }
+
+      return selectedCol;
+    }
   }
 }

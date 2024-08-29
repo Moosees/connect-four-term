@@ -80,7 +80,7 @@ export default class Game {
       const currentMove = player.isHuman
         ? await this.#userInterface.paintTokenDropper(
             player.name,
-            this.#numCols,
+            this.#board.findFullColumns(),
           )
         : player.opponent?.calculateNextDrop(); // NOTE: Should always exist if isHuman is false
 
