@@ -85,10 +85,8 @@ export default class Game {
         : player.opponent?.calculateNextDrop(); // NOTE: Should always exist if isHuman is false
 
       if (!currentMove) throw new Error("Failed to calculate next move");
-      const { maxConnectionFound, boardMatrix } = this.#board.dropToken(
-        currentMove,
-        currentPlayer,
-      );
+      const { maxConnectionFound, boardMatrix, lastMove } =
+        this.#board.dropToken(currentMove, currentPlayer);
 
       this.#userInterface.paintBoard(boardMatrix);
 
@@ -98,8 +96,16 @@ export default class Game {
         break;
       }
 
-      this.#playerOne.opponent?.analyzeBoard(boardMatrix);
-      this.#playerTwo.opponent?.analyzeBoard(boardMatrix);
+      this.#playerOne.opponent?.analyzeBoard(
+        boardMatrix,
+        lastMove,
+        currentPlayer === 1,
+      );
+      this.#playerTwo.opponent?.analyzeBoard(
+        boardMatrix,
+        lastMove,
+        currentPlayer === 2,
+      );
       currentPlayer = currentPlayer === 1 ? 2 : 1;
     }
 

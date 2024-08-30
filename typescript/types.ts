@@ -26,7 +26,11 @@ export interface UserInterface {
 }
 
 export interface ComputerOpponent {
-  analyzeBoard(board: BoardMatrix): void;
+  analyzeBoard(
+    board: BoardMatrix,
+    lastMove: BoardCoordinate,
+    isOwnMove: boolean,
+  ): void;
   calculateNextDrop(): number;
 }
 

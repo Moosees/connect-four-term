@@ -32,6 +32,7 @@ export default class Board {
 
   dropToken(col: number, playerNum: BoardCell) {
     const currentCol = this.#board[col - 1];
+    let move = { x: col - 1, y: 0 };
     let maxConnection = 1;
     console.log(currentCol);
 
@@ -40,19 +41,21 @@ export default class Board {
     for (let i = 0; i <= currentCol.length; ++i) {
       if (i === currentCol.length || currentCol[i] !== 0) {
         currentCol[i - 1] = playerNum;
+        move.y = i - 1;
         console.log(
           `adding token ${playerNum} to col ${col}, it falls to row ${i - 1}`,
         );
-        maxConnection = this.#findMaxConnection({
-          x: col - 1,
-          y: i - 1,
-        });
+        maxConnection = this.#findMaxConnection(move);
         console.log(`max connection found: ${maxConnection}`);
         break;
       }
     }
 
-    return { boardMatrix: this.#board, maxConnectionFound: maxConnection };
+    return {
+      boardMatrix: this.#board,
+      maxConnectionFound: maxConnection,
+      lastMove: move,
+    };
   }
 
   #traverseUntilStopped(startPos: BoardCoordinate, direction: BoardCoordinate) {
