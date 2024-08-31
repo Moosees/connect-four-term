@@ -1,6 +1,6 @@
 import { BoardCoordinate, BoardMatrix, ComputerOpponent } from "../types.js";
 
-export class EasyComputer implements ComputerOpponent {
+export class OpponentRunarRandom implements ComputerOpponent {
   #possibleDrops: number[] = [];
 
   constructor(board: BoardMatrix) {
