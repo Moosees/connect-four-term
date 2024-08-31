@@ -1,4 +1,5 @@
 import Game from "./game/Game.js";
+import { OpponentNejlaNew } from "./opponents/OppoenentNejlaNew.js";
 import { OpponentRunarRandom } from "./opponents/OpponentRunarRandom.js";
 import { OpponentInitializer } from "./types.js";
 import TerminalUi from "./ui/TerminalUi.js";
@@ -12,9 +13,9 @@ const opponents: OpponentInitializer[] = [
   },
   {
     id: 2,
-    name: "Test",
+    name: "Nejla New",
     difficulty: "Easy",
-    constructor: OpponentRunarRandom,
+    constructor: OpponentNejlaNew,
   },
 ];
 
