@@ -17,5 +17,5 @@ A two player game that runs in your terminal, where you take turns dropping toke
 - Indicator for latest move? only for computer opponsent?
 - Win screen (with draw support)
 - Show winning connection on board
-- Rework ui so screens fit together better
-- Add option to quit in the middle of a game
+- Rework ui so screens fit together better and show column numbers
+- Add option to quit in the middle of a game? or write "press ctrl-c to quit"?

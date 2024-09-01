@@ -31,7 +31,6 @@ export class OpponentNejlaNew implements ComputerOpponent {
         weight: this.#calculateWeightForDrop(board, coord),
       };
     });
-    console.log(this.#dropsWithWeight);
   }
 
   calculateNextDrop(): number {
@@ -82,6 +81,7 @@ export class OpponentNejlaNew implements ComputerOpponent {
     const currentLocation = { ...start };
     let weight = 0;
     let stepsTaken = 0;
+    let player: 1 | 2 | undefined = undefined;
 
     while (stepsTaken < 4) {
       currentLocation.x += direction.x;
@@ -91,12 +91,15 @@ export class OpponentNejlaNew implements ComputerOpponent {
         currentLocation.x < 0 ||
         currentLocation.x >= width ||
         currentLocation.y < 0 ||
-        currentLocation.y >= height ||
-        board[currentLocation.x][currentLocation.y] === 0
+        currentLocation.y >= height
       )
         break;
 
-      weight += 5 * ++stepsTaken;
+      const currentPlayer = board[currentLocation.x][currentLocation.y];
+      if (currentPlayer === 0 || (player && player !== currentPlayer)) break;
+
+      player = currentPlayer;
+      weight += 5 * ++stepsTaken * stepsTaken;
     }
 
     return weight;
