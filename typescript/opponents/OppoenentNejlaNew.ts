@@ -18,10 +18,21 @@ export class OpponentNejlaNew implements ComputerOpponent {
   }
 
   analyzeBoard(
-    _board: BoardMatrix,
+    board: BoardMatrix,
     _lastMove: BoardCoordinate,
-    _isOwnMove: boolean,
-  ): void {}
+    isOwnMove: boolean,
+  ): void {
+    if (isOwnMove) return;
+
+    const possibleDrops = this.#findPossibleDrops(board);
+    this.#dropsWithWeight = possibleDrops.map((coord) => {
+      return {
+        col: coord.x + 1,
+        weight: this.#calculateWeightForDrop(board, coord),
+      };
+    });
+    console.log(this.#dropsWithWeight);
+  }
 
   calculateNextDrop(): number {
     const totalWeight = this.#dropsWithWeight.reduce(
@@ -36,6 +47,18 @@ export class OpponentNejlaNew implements ComputerOpponent {
     }
 
     throw new Error("Could not calculate where to drop");
+  }
+
+  #findPossibleDrops(board: BoardMatrix) {
+    const drops: BoardCoordinate[] = [];
+
+    return board.reduce((acc, col, i) => {
+      const y = col.findLastIndex((cell) => cell === 0);
+
+      if (y === -1) return acc;
+
+      return [...acc, { x: i, y }];
+    }, drops);
   }
 
   #calculateWeightForDrop(board: BoardMatrix, coord: BoardCoordinate) {
