@@ -1,6 +1,3 @@
-// @ts-ignore
-import { setTimeout } from "timers/promises";
-
 import { OpponentInitializer, UserInterface } from "../types.js";
 import Board from "./Board.js";
 import Player from "./Player.js";
