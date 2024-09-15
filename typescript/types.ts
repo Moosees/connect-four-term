@@ -14,6 +14,7 @@ export type GameOptions = { p1: PlayerOptions; p2: PlayerOptions };
 
 export interface UserInterface {
   paintStart(): Promise<UIStartChoices>;
+  paintWinScreen(winner: string, isDraw: boolean): Promise<"done">;
   paintOptions(
     options: GameOptions,
     opponents: OpponentInitializer[],
@@ -31,7 +32,7 @@ export interface ComputerOpponent {
     lastMove: BoardCoordinate,
     isOwnMove: boolean,
   ): void;
-  calculateNextDrop(): number;
+  calculateNextDrop(): Promise<number>;
 }
 
 export type OpponentInitializer = {

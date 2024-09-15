@@ -27,6 +27,16 @@ export default class TerminalUi implements UserInterface {
   }
 
   @exitErrorHandler
+  async paintWinScreen(winner: string, isDraw: boolean) {
+    await input({
+      message: isDraw ? "It's draw!" : `${winner} is the winner!`,
+      theme: { prefix: "" },
+    });
+
+    return "done" as const;
+  }
+
+  @exitErrorHandler
   async paintOptions(options: GameOptions, opponents: OpponentInitializer[]) {
     console.clear();
     let selected = "menu";

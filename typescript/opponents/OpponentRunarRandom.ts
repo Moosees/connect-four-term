@@ -15,8 +15,11 @@ export class OpponentRunarRandom implements ComputerOpponent {
     this.#generatePossibleDrops(board);
   }
 
-  calculateNextDrop(): number {
+  async calculateNextDrop(): Promise<number> {
     const randomNumber = Math.floor(Math.random() * this.#possibleDrops.length);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
 
     return this.#possibleDrops[randomNumber];
   }

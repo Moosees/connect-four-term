@@ -82,7 +82,7 @@ export default class Game {
             player.name,
             this.#board.findFullColumns(),
           )
-        : player.opponent?.calculateNextDrop(); // NOTE: Should always exist if isHuman is false
+        : await player.opponent?.calculateNextDrop(); // NOTE: Should always exist if isHuman is false
 
       if (!currentMove) throw new Error("Failed to calculate next move");
       const { maxConnectionFound, boardMatrix, lastMove } =
@@ -109,7 +109,10 @@ export default class Game {
       currentPlayer = currentPlayer === 1 ? 2 : 1;
     }
 
-    console.log(isDraw ? "Draw!" : `Player ${currentPlayer} probably won`);
+    const currentPlayerName =
+      currentPlayer === 1 ? this.#playerOne.name : this.#playerTwo.name;
+    await this.#userInterface.paintWinScreen(currentPlayerName, isDraw);
+
     this.run();
   }
 }

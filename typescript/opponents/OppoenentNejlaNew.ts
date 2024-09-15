@@ -33,12 +33,15 @@ export class OpponentNejlaNew implements ComputerOpponent {
     });
   }
 
-  calculateNextDrop(): number {
+  async calculateNextDrop(): Promise<number> {
     const totalWeight = this.#dropsWithWeight.reduce(
       (sum, term) => sum + term.weight,
       0,
     );
     let randomNumber = Math.floor(Math.random() * totalWeight) + 1;
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
 
     for (const drop of this.#dropsWithWeight) {
       if (randomNumber <= drop.weight) return drop.col;
