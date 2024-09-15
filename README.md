@@ -5,6 +5,11 @@ tokens into a 2d grid. The first player to get four of their tokens in a row win
 
 ## Installation
 
+- Clone this repo
+- cd into directory
+- run `npm install`
+- run `npm start`
+
 ## Todo
 
 ### Logic
