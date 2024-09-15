@@ -78,16 +78,33 @@ export default class TerminalUi implements UserInterface {
   }
 
   paintBoard(board: BoardMatrix) {
+    const tiles = {
+      0: " ",
+      1: "X",
+      2: "O",
+    };
+
     const boardString = board
-      .reduce((acc, col) => {
-        for (const [i, cell] of col.entries()) {
-          acc[i] += ` ${cell} |`;
-        }
-        return acc;
-      }, new Array(board[0].length).fill("|"))
+      .reduce(
+        (acc, col) => {
+          for (const [i, cell] of col.entries()) {
+            acc[i * 2] += ` ${tiles[cell]} |`;
+            acc[i * 2 + 1] += "---|";
+          }
+          return acc;
+        },
+        new Array(board[0].length * 2).fill("|"),
+      )
       .join("\n");
 
-    console.log(boardString + "\n");
+    const header =
+      " " +
+      new Array(board.length)
+        .fill("")
+        .map((_x, i) => ` ${i + 1} `)
+        .join(" ");
+    const separator = "|" + new Array(board.length).fill("---|").join("");
+    console.log(header + "\n" + separator + "\n" + boardString + "\n");
     return "done" as const;
   }
 

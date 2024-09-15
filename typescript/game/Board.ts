@@ -34,7 +34,6 @@ export default class Board {
     const currentCol = this.#board[col - 1];
     let move = { x: col - 1, y: 0 };
     let maxConnection = 1;
-    console.log(currentCol);
 
     if (currentCol[0] !== 0) throw new Error("Invalid move, col is full");
 
