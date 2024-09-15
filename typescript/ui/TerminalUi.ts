@@ -10,6 +10,7 @@ import { getOptionsChoices } from "./terminalUi-utils.js";
 
 export default class TerminalUi implements UserInterface {
   async paintStart() {
+    console.clear();
     const answer = await prompt({
       message: "Please select an option",
       choices: [
@@ -27,6 +28,7 @@ export default class TerminalUi implements UserInterface {
 
   @exitErrorHandler
   async paintOptions(options: GameOptions, opponents: OpponentInitializer[]) {
+    console.clear();
     let selected = "menu";
     const newOptions = { p1: { ...options.p1 }, p2: { ...options.p2 } };
     const { p1, p2 } = newOptions;
@@ -58,6 +60,7 @@ export default class TerminalUi implements UserInterface {
 
   @exitErrorHandler
   async #paintNameChange(oldName: string) {
+    console.clear();
     return await input({
       message: "New name:",
       default: oldName,
@@ -67,6 +70,7 @@ export default class TerminalUi implements UserInterface {
 
   @exitErrorHandler
   async #paintAIchange(currentId: number, oppoents: OpponentInitializer[]) {
+    console.clear();
     return await select({
       message: "Select an opponent",
       default: currentId,

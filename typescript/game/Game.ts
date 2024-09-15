@@ -71,6 +71,9 @@ export default class Game {
     let currentPlayer: 1 | 2 = 1;
     let isDraw = false;
 
+    console.clear();
+    this.#userInterface.paintBoard(this.#board.matrix);
+
     while (true) {
       const player = currentPlayer === 1 ? this.#playerOne : this.#playerTwo;
 

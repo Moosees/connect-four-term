@@ -41,11 +41,12 @@ export default class Board {
       if (i === currentCol.length || currentCol[i] !== 0) {
         currentCol[i - 1] = playerNum;
         move.y = i - 1;
+        console.clear();
         console.log(
-          `adding token ${playerNum} to col ${col}, it falls to row ${i - 1}`,
+          `\nDropped ${playerNum === 1 ? "X" : "O"} token in col ${col}, it falls ${i} rows\n`,
         );
         maxConnection = this.#findMaxConnection(move);
-        console.log(`max connection found: ${maxConnection}`);
+        // console.log(`max connection found: ${maxConnection}`);
         break;
       }
     }
